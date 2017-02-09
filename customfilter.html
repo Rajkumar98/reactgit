@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>customfilter</title>
+</head>
+
+<body>
+<ul>
+  <li>Filter</li>
+  <li>The numberlist is [12, 5, 8, 130, 44, 10]
+    <ol>
+      <li>The numbers 10 will be filtered from this list</li>
+      <li>The numbers greater than 10 will be filtered from this list</li>
+      <li>The numbers lesser than 10 will be filtered from this list</li>
+    </ol>
+  </li>
+</ul>
+<script>
+Array.prototype.customfilter = function(fun/*, thisArg*/) {
+    var len = this.length >>> 0;
+    var res = [];
+    var thisArg = arguments.length;
+    for (var i = 0; i < len; i++) {
+        var val = this[i];
+        if (fun.call(thisArg, val)) {
+          res.push(val);
+        }
+    }
+    return res;
+  };
+  
+function isEqual(value) {
+  return value !== 10;
+}
+
+function isBigEnough(value) {
+  return value > 10;
+}
+
+function isSmallEnough(value) {
+  return value < 10;
+}
+
+var list=[12, 5, 8, 130, 44, 10];
+var filtered1 = list.customfilter(isEqual);
+console.log(filtered1);
+var filtered2 = list.customfilter(isBigEnough);
+console.log(filtered2);
+var filtered3 = list.customfilter(isSmallEnough);
+console.log(filtered3);
+</script>
+</body>
+
+</html>
